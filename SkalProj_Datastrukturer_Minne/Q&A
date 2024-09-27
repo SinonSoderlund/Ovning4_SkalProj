@@ -1,0 +1,103 @@
+1: How does stack and heap memory work? 
+The stack builds upwards for each function call, with only the topmost memory block being acessable at any time, with new function calls adding to the stack and scope resolution removing objects.
+Any variable declared in a function scope ends up on the stack.
+
+The heap works on a simultanious access basis, which is to say that anything that is found within it is acessable everywhere for as long as the scope contains a valid memory reference.
+The heap builds "downwards" and if it and the stack collides then the program has run out of memory and will proceed to crash.
+
+2: Value vs. reference types
+Value types are, perhaps most easily described, those predefeined variable types which have a predefined size, such as ints, chars, bools, and which will in an inline declaration be stored directly in the stack.
+
+Reference types are mainly classes and their members, while the pointer to the reference type is stored on stack the actual memory body of the object will be placed on the heap.
+
+3. Result diffrence
+
+In the first image a normal int is declared, an int is value type and declaring it as "new" isnt going to change that, resulting in the result of 3.
+
+In the second image a custom int wrapper is used, this is a refrence type, and so when y is set to x, y is now poiting to the on-heap int declerations of x, allwing it to be changed and resulting in an output value of 4.
+
+ICA queue
+
+a: Queue: Empty
+b: Queue: Kalle
+c: Queue: Kalle, Greta
+d: Out: Kalle, Queue: Greta
+e: Queue: Greta, Stina
+f: Out: Greta, Queue: Stina
+g: Queue: Stina, Olle
+
+
+ICA Stack
+
+1: Stack1.Push(Kalle)
+2: Stack1.Push(Greta)
+3: Stack2.Push(Stack1.Pop())
+4: Stack1.Pop() //Kalle leaves queue
+5: Stack2.Push(Stina)
+6: Stack1.Push(Stack2.Pop())
+7: Stack2.Pop() //Greta leaves queue
+8: Stack1.Push(Olle)
+
+using a stack as a queue is also known as "the Tower of Hanoi" and has no practical use case outside of mediocre minigames
+
+Checkstring
+
+You use a stack to store some representation of the symbols () {} [] <> and store it in the stack, only left hand characters or stack top right hand counter parts are allowed
+if a non-matched right hand symbol appears or there are items left in stack at the end of the string then parenthesis enclosure fails
+
+Recursive odd
+Case f(1) : Return 1
+Case f(3) : Return (3-1) => Return (2-1) => Return 1 => return 3 = Return 5;
+Case f(5) : Return (5-1) => Return (4-1) => Return (3-1) = Return (2-1) => Return 1 => Return 3 => Return 5 => Return 7 => Return 9;
+
+RecursiveEven
+
+static int RecrusiveEven(int n)
+{
+if(i == 1)
+{
+return 0;
+}
+return RecursiveEven((n-1)+2);
+}
+
+static int fibbonacci (uint i)
+{
+if (i == 0)
+{
+return 0;
+}
+if (i == 1 || i == 2)
+{
+return 1
+}
+return fibbonacci(i-2) + fibbonacci(i-1);
+}
+
+iterativeOdd
+f(1): result = 1;
+f(3): Result = 1 => 3 => 5 => result = 7;
+f(5): Result  = 1 => 3 => 5 => 7 result = 9
+
+static int IterativeEven(int i)
+{
+int result = 0;
+for ( int i = 0; i < i -1; i++)
+{
+result += 2;
+}
+return result;
+}
+
+iterative Fibbonacci(uint target)
+{
+int[] fibbonacci = new int[] {0, 1};
+if(target < 2)
+return fibbonacci[target];
+for (int i = 0; i < target - 1, i++)
+fibbonacci[i%2] += fibbonacci[i+1%2];
+
+return fibbonacci[target%2];
+}
+
+Question final: The iterative function is far more memory effecient, as the recursive function needs to create a new stack entry for every recursion, whereas the memory usage of the iterative solution is constant.
