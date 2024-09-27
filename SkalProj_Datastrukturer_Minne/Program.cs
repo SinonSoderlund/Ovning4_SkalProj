@@ -6,6 +6,10 @@ namespace SkalProj_Datastrukturer_Minne
 {
     class Program
     {
+        #region Defines
+        public static readonly int CLOSED_PAIR = 0, CURLY_OPEN = 1, CURLY_CLOSE = -1, SQUARE_OPEN = 2, SQUARE_CLOSE = -2, PARENTHESIS_OPEN = 3, PARENTHESIS_CLOSE = -3, ANGULAR_OPEN = 4, ANGUAL_CLOSE = -4, IRRELEVANT_CHAR = 5;
+        #endregion
+
         /// <summary>
         /// The main method, will handle the menus for the program
         /// </summary>
@@ -200,15 +204,15 @@ namespace SkalProj_Datastrukturer_Minne
                 else
                     now = ParenthesisToInt(c);
 
-                if (now < 5 && now > 0)
+                if (now != IRRELEVANT_CHAR && now > CLOSED_PAIR)
                 {
                     stack.Push(now);
                 }
-                else if (now == 0)
+                else if (now == CLOSED_PAIR)
                 {
                     stack.Pop();
                 }
-                else if (now < 0)
+                else if (now < CLOSED_PAIR)
                 {
                     Console.WriteLine("Incorrectly enclosed parenthesis detected, parethesis incorrectly paired or right hand characters have appeared without left hand counterpart, exiting...");
                     ConsoleUtils.WaitToContinue();
@@ -239,8 +243,6 @@ namespace SkalProj_Datastrukturer_Minne
         static int Parenthesizer(char cNext, int current)
         {
             int iNext = ParenthesisToInt(cNext);
-            if (iNext == 5)
-                return 5;
             int now = iNext + current;
             if (now == 0)
                 return now;
@@ -257,23 +259,23 @@ namespace SkalProj_Datastrukturer_Minne
             switch (next)
             {
                 case '{':
-                    return 1;
+                    return CURLY_OPEN;
                 case '}':
-                    return -1;
+                    return CURLY_CLOSE;
                 case '[':
-                    return 2;
+                    return SQUARE_OPEN;
                 case ']':
-                    return -2;
+                    return SQUARE_CLOSE;
                 case '(':
-                    return 3;
+                    return PARENTHESIS_OPEN;
                 case ')':
-                    return -3;
+                    return PARENTHESIS_CLOSE;
                 case '<':
-                    return 4;
+                    return ANGULAR_OPEN;
                 case '>':
-                    return -4;
+                    return ANGUAL_CLOSE;
                 default:
-                    return 5;
+                    return IRRELEVANT_CHAR;
             }
         }
     }
